@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken;
 public class The86Impl implements The86 {
 	private Authorization authorization = null;
 
-	private The86ObjectFactoryImpl the86ObjFactory = new The86ObjectFactoryImpl();
+	private The86ObjectFactory the86ObjFactory = new The86ObjectFactory();
 	private The86UrlResourceFactory the86UrlFactory = null;
 
 	public static void main(String args[]) {

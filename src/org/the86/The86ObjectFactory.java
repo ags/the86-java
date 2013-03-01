@@ -13,7 +13,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-public class The86ObjectFactoryImpl {
+public class The86ObjectFactory {
 	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
 	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 	private final JsonParser parser = new JsonParser();
