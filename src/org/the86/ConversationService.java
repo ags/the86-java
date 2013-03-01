@@ -6,6 +6,6 @@ import org.the86.model.Conversation;
 
 public interface ConversationService {
 
-	public List<Conversation> getConversations(String group_slug);
-	
+	public List<Conversation> getConversations(String groupSlug);
+
 }

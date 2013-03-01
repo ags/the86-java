@@ -48,6 +48,11 @@ public class The86Impl implements The86 {
 				for (Attachment attachment : post.getAttachments()) {
 					System.out.println("\t\t" + attachment);
 				}
+
+			}
+			for (Metadatum metadatum : the86.getConversationMetadata(
+					"1-alex-s-pod", conversation.getId())) {
+				System.out.println("\t" + metadatum);
 			}
 		}
 	}
@@ -76,10 +81,18 @@ public class The86Impl implements The86 {
 		}, the86UrlFactory.buildUrl(String.format("/groups/%s", slug)).get());
 	}
 
-	public List<Conversation> getConversations(String group_slug) {
-		String url = String.format("/groups/%s/conversations", group_slug);
+	public List<Conversation> getConversations(String groupSlug) {
+		String url = String.format("/groups/%s/conversations", groupSlug);
 		return the86ObjFactory.createObject(
 				new TypeToken<List<Conversation>>() {
 				}, the86UrlFactory.buildUrl(url).get());
+	}
+
+	public List<Metadatum> getConversationMetadata(String groupSlug,
+			String conversationId) {
+		String url = String.format("/groups/%s/conversations/%s/metadata",
+				groupSlug, conversationId);
+		return the86ObjFactory.createObject(new TypeToken<List<Metadatum>>() {
+		}, the86UrlFactory.buildUrl(url).get());
 	}
 }

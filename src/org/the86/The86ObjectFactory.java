@@ -68,7 +68,7 @@ public class The86ObjectFactory {
 		}
 	}
 
-	private boolean isList(TypeToken typeToken) {
+	private <T> boolean isList(TypeToken<T> typeToken) {
 		return List.class.isAssignableFrom(typeToken.getRawType());
 	}
 }
