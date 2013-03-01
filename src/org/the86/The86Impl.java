@@ -85,7 +85,9 @@ public class The86Impl implements The86 {
 		try {
 			HttpURLConnection conn = (HttpURLConnection) new URL(url)
 					.openConnection();
-			//conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
+			if (token != null) {
+				conn.setRequestProperty("Authorization", "Bearer " + token);
+			}
             conn.setDoOutput(requestMethod.equals(METHOD_POST) || requestMethod.equals(METHOD_PUT));
             conn.setRequestMethod(requestMethod);
 
