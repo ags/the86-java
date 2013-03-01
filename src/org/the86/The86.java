@@ -1,6 +1,6 @@
 package org.the86;
 
 public interface The86 extends AuthorizationService, GroupService,
-		ConversationService, MetadataService {
+		ConversationService, MetadataService, GroupMembershipsService {
 
 }

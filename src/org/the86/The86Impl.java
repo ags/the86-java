@@ -1,5 +1,6 @@
 package org.the86;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.the86.model.Attachment;
 import org.the86.model.Authorization;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
+import org.the86.model.GroupMembership;
 import org.the86.model.Like;
 import org.the86.model.Post;
 
@@ -37,7 +39,7 @@ public class The86Impl implements The86 {
 
 		System.out.println("listing conversations");
 		List<Conversation> conversations = the86
-				.getConversations("1-alex-s-pod");
+				.getGroupConversations("1-alex-s-pod");
 		for (Conversation conversation : conversations) {
 			System.out.println(conversation);
 			for (Post post : conversation.getPosts()) {
@@ -53,6 +55,20 @@ public class The86Impl implements The86 {
 			for (Metadatum metadatum : the86.getConversationMetadata(
 					"1-alex-s-pod", conversation.getId())) {
 				System.out.println("\t" + metadatum);
+			}
+		}
+
+		System.out.println("group memberships");
+		List<GroupMembership> memberships = the86.getGroupMemberships("1");
+		for (GroupMembership membership : memberships) {
+			System.out.println(membership);
+		}
+
+		System.out.println("all conversations");
+		for (Conversation conversation : the86.getUserConversations("1")) {
+			System.out.println(conversation);
+			for (Post post : conversation.getPosts()) {
+				System.out.println("\t" + post);
 			}
 		}
 	}
@@ -72,27 +88,47 @@ public class The86Impl implements The86 {
 	}
 
 	public List<Group> getGroups() {
-		return the86ObjFactory.createObject(new TypeToken<List<Group>>() {
-		}, the86UrlFactory.buildUrl("/groups").get());
+		return getResource(new TypeToken<List<Group>>() {
+		}, "/groups");
 	}
 
-	public Group getGroup(String slug) {
-		return the86ObjFactory.createObject(new TypeToken<Group>() {
-		}, the86UrlFactory.buildUrl(String.format("/groups/%s", slug)).get());
+	public Group getGroup(String groupSlug) {
+		String url = String.format("/groups/%s", groupSlug);
+		return getResource(new TypeToken<Group>() {
+		}, url);
 	}
 
-	public List<Conversation> getConversations(String groupSlug) {
+	public List<Conversation> getGroupConversations(String groupSlug) {
 		String url = String.format("/groups/%s/conversations", groupSlug);
-		return the86ObjFactory.createObject(
-				new TypeToken<List<Conversation>>() {
-				}, the86UrlFactory.buildUrl(url).get());
+		return getResource(new TypeToken<List<Conversation>>() {
+		}, url);
+	}
+
+	public List<Conversation> getUserConversations(String userId) {
+		String url = String.format("/users/%s/conversations", userId);
+		return getResource(new TypeToken<List<Conversation>>() {
+		}, url);
 	}
 
 	public List<Metadatum> getConversationMetadata(String groupSlug,
 			String conversationId) {
 		String url = String.format("/groups/%s/conversations/%s/metadata",
 				groupSlug, conversationId);
-		return the86ObjFactory.createObject(new TypeToken<List<Metadatum>>() {
-		}, the86UrlFactory.buildUrl(url).get());
+		return getResource(new TypeToken<List<Metadatum>>() {
+		}, url);
+	}
+
+	public List<GroupMembership> getGroupMemberships(String userId) {
+		String url = String.format("/users/%s/memberships", userId);
+		return getResource(new TypeToken<List<GroupMembership>>() {
+		}, url);
+	}
+
+	private <T> T getResource(TypeToken<T> typeToken, String url) {
+		return requestResource(typeToken, the86UrlFactory.buildUrl(url).get());
+	}
+
+	private <T> T requestResource(TypeToken<T> typeToken, InputStream json) {
+		return the86ObjFactory.createObject(typeToken, json);
 	}
 }
