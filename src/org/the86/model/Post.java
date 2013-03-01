@@ -11,6 +11,8 @@ public class Post extends The86Object {
 
 	private boolean is_original;
 
+	private Post in_reply_to;
+
 	private String in_reply_to_id;
 
 	private Date created_at;
@@ -53,10 +55,13 @@ public class Post extends The86Object {
 		return likes;
 	}
 
+	public Post getInReplyTo() {
+		return in_reply_to;
+	}
+
 	public String toString() {
-		return content + " - " + user;
+		return String.format("%s - %s", content, user);
 	}
 
 	// TODO attachments
-	// TODO replies
 }
