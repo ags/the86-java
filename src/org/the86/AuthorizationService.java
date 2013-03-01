@@ -1,9 +1,9 @@
 package org.the86;
 
-import org.the86.model.User;
+import org.the86.model.Authorization;
 
 public interface AuthorizationService {
 
-	public User authorize(String email, String password);
+	public Authorization authorize(String email, String password);
 	
 }
