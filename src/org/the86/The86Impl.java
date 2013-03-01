@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.the86.model.Attachment;
 import org.the86.model.Authorization;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
@@ -43,6 +44,9 @@ public class The86Impl implements The86 {
 				System.out.println("\t" + post);
 				for (Like like : post.getLikes()) {
 					System.out.println("\t\t" + like);
+				}
+				for (Attachment attachment : post.getAttachments()) {
+					System.out.println("\t\t" + attachment);
 				}
 			}
 		}

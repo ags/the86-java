@@ -23,6 +23,8 @@ public class Post extends The86Object {
 
 	private List<Like> likes;
 
+	private List<Attachment> attachments;
+
 	public String getContent() {
 		return content;
 	}
@@ -59,9 +61,11 @@ public class Post extends The86Object {
 		return in_reply_to;
 	}
 
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
 	public String toString() {
 		return String.format("%s - %s", content, user);
 	}
-
-	// TODO attachments
 }
