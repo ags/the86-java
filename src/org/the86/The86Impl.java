@@ -59,7 +59,7 @@ public class The86Impl implements The86 {
 		}
 
 		System.out.println("group memberships");
-		List<GroupMembership> memberships = the86.getGroupMemberships("1");
+		List<GroupMembership> memberships = the86.getUserGroupMemberships("1");
 		for (GroupMembership membership : memberships) {
 			System.out.println(membership);
 		}
