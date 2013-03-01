@@ -7,6 +7,7 @@ import java.util.Map;
 import org.the86.model.Authorization;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
+import org.the86.model.Like;
 import org.the86.model.Post;
 
 import com.google.gson.reflect.TypeToken;
@@ -40,6 +41,9 @@ public class The86Impl implements The86 {
 			System.out.println(conversation);
 			for (Post post : conversation.getPosts()) {
 				System.out.println("\t" + post);
+				for (Like like : post.getLikes()) {
+					System.out.println("\t\t" + like);
+				}
 			}
 		}
 	}

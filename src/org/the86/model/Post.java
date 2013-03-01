@@ -1,6 +1,7 @@
 package org.the86.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Post extends The86Object {
 
@@ -17,6 +18,8 @@ public class Post extends The86Object {
 	private Date updated_at;
 
 	private User user;
+
+	private List<Like> likes;
 
 	public String getContent() {
 		return content;
@@ -46,11 +49,14 @@ public class Post extends The86Object {
 		return updated_at;
 	}
 
+	public List<Like> getLikes() {
+		return likes;
+	}
+
 	public String toString() {
 		return content + " - " + user;
 	}
 
 	// TODO attachments
-	// TODO likes
 	// TODO replies
 }
