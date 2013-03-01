@@ -1,6 +1,7 @@
 package org.the86.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Conversation extends The86Object {
 
@@ -10,9 +11,9 @@ public class Conversation extends The86Object {
 
 	private Date bumped_at;
 
-	private Post[] posts;
+	private List<Post> posts;
 
-	public Post[] getPosts() {
+	public List<Post> getPosts() {
 		return posts;
 	}
 
