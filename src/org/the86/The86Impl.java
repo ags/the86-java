@@ -71,6 +71,12 @@ public class The86Impl implements The86 {
 				System.out.println("\t" + post);
 			}
 		}
+
+		System.out.println("conversation posts");
+		List<Post> posts = the86.getConversationPosts("1-alex-s-pod", "3");
+		for (Post post : posts) {
+			System.out.println(post);
+		}
 	}
 
 	public The86Impl(String domain, String email, String password) {
@@ -118,9 +124,17 @@ public class The86Impl implements The86 {
 		}, url);
 	}
 
-	public List<GroupMembership> getGroupMemberships(String userId) {
+	public List<GroupMembership> getUserGroupMemberships(String userId) {
 		String url = String.format("/users/%s/memberships", userId);
 		return getResource(new TypeToken<List<GroupMembership>>() {
+		}, url);
+	}
+
+	public List<Post> getConversationPosts(String groupSlug,
+			String conversationId) {
+		String url = String.format("/groups/%s/conversations/%s/posts",
+				groupSlug, conversationId);
+		return getResource(new TypeToken<List<Post>>() {
 		}, url);
 	}
 
