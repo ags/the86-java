@@ -25,8 +25,6 @@ public class The86Impl implements The86 {
 	private static final String API_VERSION = "v1";
 
 	private String domain = null;
-	private String email = null;
-	private String password = null;
 	private Authorization authorization = null;
 
 	private The86ObjectFactoryImpl the86ObjFactory = new The86ObjectFactoryImpl();
@@ -60,8 +58,6 @@ public class The86Impl implements The86 {
 
 	public The86Impl(String domain, String email, String password) {
 		this.domain = domain;
-		this.email = email;
-		this.password = password;
 		authorization = authorize(email, password);
 	}
 
