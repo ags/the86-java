@@ -5,14 +5,10 @@ package org.the86.model;
  */
 public class The86Object {
 
-	private String id;
+	protected String id;
 
 	public String getId() {
 		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 }

@@ -14,11 +14,9 @@ import org.the86.model.Authorization;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
 import org.the86.model.Post;
-import org.the86.model.User;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 public class The86Impl implements The86 {
@@ -40,6 +38,16 @@ public class The86Impl implements The86 {
 		String email = args[1];
 		String password = args[2];
 		The86 the86 = new The86Impl(domain, email, password);
+		
+		System.out.println("group index");
+		List<Group> groups = the86.getGroups();
+		for (Group g : groups) {
+			System.out.println(g);
+		}
+		
+		System.out.println("group show");
+		Group g = the86.getGroup("1-alex-s-pod");
+		System.out.println(g);
 	}
 
 	public The86Impl(String domain, String email, String password) {
@@ -47,10 +55,6 @@ public class The86Impl implements The86 {
 		this.email = email;
 		this.password = password;
 		authorization = authorize(email, password);
-		
-		System.out.println(authorization.getUserAccessToken());
-		System.out.println(authorization.getUser());
-
 	}
 
 	public Authorization authorize(String email, String password) {
@@ -59,6 +63,16 @@ public class The86Impl implements The86 {
 		params.put("password", password);
 		return the86ObjFactory.createObject(new TypeToken<Authorization>() {
 		}, doPost(buildUrl("/users/authenticate"), params));
+	}
+
+	public List<Group> getGroups() {
+		return the86ObjFactory.createObject(new TypeToken<List<Group>>() {
+		}, doGet(buildUrl("/groups")));
+	}
+	
+	public Group getGroup(String slug) {
+		return the86ObjFactory.createObject(new TypeToken<Group>() {
+		}, doGet(buildUrl(String.format("/groups/%s", slug))));
 	}
 
 	public String buildUrl(String resource) {

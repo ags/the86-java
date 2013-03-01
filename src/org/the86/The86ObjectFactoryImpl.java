@@ -25,12 +25,11 @@ public class The86ObjectFactoryImpl {
 		}
 		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
 	}
-	
+
 	public JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
 			JsonElement element = parser.parse(new InputStreamReader(
-					jsonContent,
-					UTF_8_CHAR_SET));
+					jsonContent, UTF_8_CHAR_SET));
 			if (element.isJsonObject()) {
 				return element.getAsJsonObject();
 			} else if (element.isJsonArray()) {
@@ -68,7 +67,7 @@ public class The86ObjectFactoryImpl {
 			new RuntimeException();
 		}
 	}
-	
+
 	private boolean isList(TypeToken typeToken) {
 		return List.class.isAssignableFrom(typeToken.getRawType());
 	}
