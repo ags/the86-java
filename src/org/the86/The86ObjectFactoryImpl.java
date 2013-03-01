@@ -15,9 +15,10 @@ import com.google.gson.reflect.TypeToken;
 
 public class The86ObjectFactoryImpl {
 	private static final Charset UTF_8_CHAR_SET = Charset.forName("UTF-8");
+	private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 	private final JsonParser parser = new JsonParser();
 	private Gson gson = null;
-	
+
 	@SuppressWarnings("unchecked")
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
 		if (jsonContent == null) {
@@ -44,20 +45,19 @@ public class The86ObjectFactoryImpl {
 			closeStream(jsonContent);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private <T> T unmarshallToObj(TypeToken<T> typeToken, JsonElement response) {
 		return (T) getGson().fromJson(response, typeToken.getType());
 	}
-	
+
 	private Gson getGson() {
 		if (gson == null) {
-			gson = new GsonBuilder().create();
+			gson = new GsonBuilder().setDateFormat(DATE_FORMAT).create();
 		}
 		return gson;
 	}
 
-	
 	private void closeStream(InputStream is) {
 		try {
 			if (is != null) {
