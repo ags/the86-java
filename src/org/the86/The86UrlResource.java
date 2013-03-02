@@ -68,6 +68,7 @@ public class The86UrlResource {
 				conn.getOutputStream().write(sb.toString().getBytes());
 				conn.getOutputStream().close();
 			}
+
 			if (conn.getResponseCode() > 399) {
 				throw new NotFoundException(resource, new BufferedInputStream(
 						conn.getErrorStream()));

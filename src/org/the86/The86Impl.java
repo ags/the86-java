@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.the86.exception.The86Exception;
+import org.the86.model.Attachment;
 import org.the86.model.Authorization;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
 import org.the86.model.GroupMembership;
+import org.the86.model.Like;
 import org.the86.model.Post;
 
 import com.google.gson.reflect.TypeToken;
@@ -28,70 +30,79 @@ public class The86Impl implements The86 {
 		try {
 			the86 = new The86Impl(domain, email, password);
 
-			List<Post> posts = the86.getConversationPosts("1-alex-s-pod", "3");
+			System.out.println("group index");
+			List<Group> groups = the86.getGroups();
+			for (Group g : groups) {
+				System.out.println(g);
+			}
+
+			System.out.println("group show");
+			Group g = the86.getGroup("1-alex-s-pod");
+			System.out.println(g);
+
+			System.out.println("listing conversations");
+			List<Conversation> conversations = the86
+					.getGroupConversations("1-alex-s-pod");
+			for (Conversation conversation : conversations) {
+				System.out.println(conversation);
+				for (Post post : conversation.getPosts()) {
+					System.out.println("\t" + post);
+					for (Like like : post.getLikes()) {
+						System.out.println("\t\t" + like);
+					}
+					for (Attachment attachment : post.getAttachments()) {
+						System.out.println("\t\t" + attachment);
+					}
+
+				}
+				for (Metadatum metadatum : the86.getConversationMetadata(
+						"1-alex-s-pod", conversation.getId())) {
+					System.out.println("\t" + metadatum);
+				}
+			}
+
+			System.out.println("group memberships");
+			List<GroupMembership> memberships = the86
+					.getUserGroupMemberships("1");
+			for (GroupMembership membership : memberships) {
+				System.out.println(membership);
+			}
+
+			System.out.println("all conversations");
+			for (Conversation conversation : the86.getUserConversations("1")) {
+				System.out.println(conversation);
+				for (Post post : conversation.getPosts()) {
+					System.out.println("\t" + post);
+				}
+			}
+
+			System.out.println("conversation posts");
+			List<Post> posts = the86.getConversationPosts("1-alex-s-pod", "2");
+			for (Post post : posts) {
+				System.out.println(post);
+			}
+
+			System.out.println("404 resource");
+			try {
+				the86.getConversationPosts("1-alex-s-pod", "3");
+			} catch (The86Exception e) {
+				System.err.println(e);
+			}
 		} catch (The86Exception e) {
-			System.err.println(e);
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 
-		// System.out.println("group index");
-		// List<Group> groups = the86.getGroups();
-		// for (Group g : groups) {
-		// System.out.println(g);
-		// }
-		//
-		// System.out.println("group show");
-		// Group g = the86.getGroup("1-alex-s-pod");
-		// System.out.println(g);
-		//
-		// System.out.println("listing conversations");
-		// List<Conversation> conversations = the86
-		// .getGroupConversations("1-alex-s-pod");
-		// for (Conversation conversation : conversations) {
-		// System.out.println(conversation);
-		// for (Post post : conversation.getPosts()) {
-		// System.out.println("\t" + post);
-		// for (Like like : post.getLikes()) {
-		// System.out.println("\t\t" + like);
-		// }
-		// for (Attachment attachment : post.getAttachments()) {
-		// System.out.println("\t\t" + attachment);
-		// }
-		//
-		// }
-		// for (Metadatum metadatum : the86.getConversationMetadata(
-		// "1-alex-s-pod", conversation.getId())) {
-		// System.out.println("\t" + metadatum);
-		// }
-		// }
-		//
-		// System.out.println("group memberships");
-		// List<GroupMembership> memberships =
-		// the86.getUserGroupMemberships("1");
-		// for (GroupMembership membership : memberships) {
-		// System.out.println(membership);
-		// }
-		//
-		// System.out.println("all conversations");
-		// for (Conversation conversation : the86.getUserConversations("1")) {
-		// System.out.println(conversation);
-		// for (Post post : conversation.getPosts()) {
-		// System.out.println("\t" + post);
-		// }
-		// }
-		//
-		// System.out.println("conversation posts");
-		// List<Post> posts = the86.getConversationPosts("1-alex-s-pod", "2");
-		// for (Post post : posts) {
-		// System.out.println(post);
-		// }
 	}
 
-	public The86Impl(String domain, String email, String password) throws The86Exception {
+	public The86Impl(String domain, String email, String password)
+			throws The86Exception {
 		this.the86UrlFactory = new The86UrlResourceFactory(domain);
 		this.authorization = authorize(email, password);
 		this.the86UrlFactory.setAuthorization(authorization);
+	}
+
+	public Authorization getAuthorization() {
+		return authorization;
 	}
 
 	public Authorization authorize(String email, String password)
