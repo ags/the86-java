@@ -27,7 +27,7 @@ public class The86ObjectFactory {
 		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));
 	}
 
-	public JsonElement unmarshallToJson(InputStream jsonContent) {
+	private JsonElement unmarshallToJson(InputStream jsonContent) {
 		try {
 			JsonElement element = parser.parse(new InputStreamReader(
 					jsonContent, UTF_8_CHAR_SET));

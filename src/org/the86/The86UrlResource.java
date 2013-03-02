@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import org.the86.exception.NotFoundException;
+import org.the86.exception.The86Exception;
 import org.the86.model.Authorization;
 
 public class The86UrlResource {
@@ -24,27 +26,28 @@ public class The86UrlResource {
 		this.authorization = authorization;
 	}
 
-	public InputStream get() {
+	public InputStream get() throws The86Exception {
 		return doRequest(METHOD_GET);
 	}
 
-	public InputStream put() {
+	public InputStream put() throws The86Exception {
 		return doRequest(METHOD_PUT);
 	}
 
-	public InputStream post(Map<String, String> params) {
+	public InputStream post(Map<String, String> params) throws The86Exception {
 		return doRequest(METHOD_POST, params);
 	}
 
-	public InputStream delete() {
+	public InputStream delete() throws The86Exception {
 		return doRequest(METHOD_DELETE);
 	}
 
-	private InputStream doRequest(String requestMethod) {
+	private InputStream doRequest(String requestMethod) throws The86Exception {
 		return doRequest(requestMethod, null);
 	}
 
-	private InputStream doRequest(String requestMethod, Map<String, String> map) {
+	private InputStream doRequest(String requestMethod, Map<String, String> map)
+			throws The86Exception {
 		try {
 			HttpURLConnection conn = (HttpURLConnection) new URL(resource)
 					.openConnection();
@@ -65,9 +68,9 @@ public class The86UrlResource {
 				conn.getOutputStream().write(sb.toString().getBytes());
 				conn.getOutputStream().close();
 			}
-
 			if (conn.getResponseCode() > 399) {
-				return null;
+				throw new NotFoundException(resource, new BufferedInputStream(
+						conn.getErrorStream()));
 			} else {
 				return new BufferedInputStream(conn.getInputStream());
 			}
