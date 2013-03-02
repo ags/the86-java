@@ -36,8 +36,8 @@ public class The86Impl implements The86 {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("email", email);
 		params.put("password", password);
-		return the86ObjFactory.createObject(new TypeToken<Authorization>() {
-		}, the86UrlFactory.buildUrl("/users/authenticate").post(params));
+		return postResource(new TypeToken<Authorization>() {
+		}, "/users/authenticate", params);
 	}
 
 	public List<Group> getGroups() throws The86Exception {
@@ -86,6 +86,21 @@ public class The86Impl implements The86 {
 				groupSlug, conversationId);
 		return getResource(new TypeToken<List<Post>>() {
 		}, url);
+	}
+
+	public Conversation createConversation(String groupSlug, String content)
+			throws The86Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("content", content);
+		String url = String.format("/groups/%s/conversations", groupSlug);
+		return postResource(new TypeToken<Conversation>() {
+		}, url, params);
+	}
+
+	private <T> T postResource(TypeToken<T> typeToken, String url,
+			Map<String, String> params) throws The86Exception {
+		return requestResource(typeToken,
+				the86UrlFactory.buildUrl(url).post(params));
 	}
 
 	private <T> T getResource(TypeToken<T> typeToken, String url)
