@@ -10,6 +10,7 @@ import org.the86.model.Authorization;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
 import org.the86.model.GroupMembership;
+import org.the86.model.Like;
 import org.the86.model.Post;
 
 import com.google.gson.reflect.TypeToken;
@@ -112,6 +113,18 @@ public class The86Impl implements The86 {
 		params.put("content", content);
 		String url = String.format("/groups/%s/conversations", groupSlug);
 		return postResource(new TypeToken<Conversation>() {
+		}, url, params);
+	}
+
+	public Like likePost(String groupSlug, String conversationId, String postId)
+			throws The86Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		// TODO temporary work around for an empty POST body
+		params.put("", "");
+		String url = String.format(
+				"/groups/%s/conversations/%s/posts/%s/likes", groupSlug,
+				conversationId, postId);
+		return postResource(new TypeToken<Like>() {
 		}, url, params);
 	}
 

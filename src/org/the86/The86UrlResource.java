@@ -57,7 +57,7 @@ public class The86UrlResource {
 			conn.setDoOutput(requestMethod.equals(METHOD_POST)
 					|| requestMethod.equals(METHOD_PUT));
 			conn.setRequestMethod(requestMethod);
-
+			
 			if (map != null && !map.isEmpty()) {
 				StringBuilder sb = new StringBuilder();
 				for (String key : map.keySet()) {

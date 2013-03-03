@@ -2,7 +2,7 @@ package org.the86.model;
 
 import java.util.Date;
 
-public class User extends The86Object {
+public class User extends The86Object implements Comparable<User> {
 
 	private String name;
 
@@ -54,5 +54,13 @@ public class User extends The86Object {
 
 	public String toString() {
 		return String.format("%s <%s>", name, email);
+	}
+
+	public int compareTo(User user) {
+		return this.id.compareTo(user.getId());
+	}
+
+	public boolean equals(User user) {
+		return compareTo(user) == 0;
 	}
 }
