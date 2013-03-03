@@ -88,6 +88,24 @@ public class The86Impl implements The86 {
 		}, url);
 	}
 
+	public Post createPost(String groupSlug, String conversationId,
+			String content) throws The86Exception {
+		return createPost(groupSlug, conversationId, content, null);
+	}
+
+	public Post createPost(String groupSlug, String conversationId,
+			String content, String inReplyToId) throws The86Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("content", content);
+		if (inReplyToId != null) {
+			params.put("in_reply_to_id", inReplyToId);
+		}
+		String url = String.format("/groups/%s/conversations/%s/posts",
+				groupSlug, conversationId);
+		return postResource(new TypeToken<Post>() {
+		}, url, params);
+	}
+
 	public Conversation createConversation(String groupSlug, String content)
 			throws The86Exception {
 		Map<String, String> params = new HashMap<String, String>();
@@ -111,4 +129,5 @@ public class The86Impl implements The86 {
 	private <T> T requestResource(TypeToken<T> typeToken, InputStream json) {
 		return the86ObjFactory.createObject(typeToken, json);
 	}
+
 }
