@@ -16,12 +16,12 @@ public class PostCreatingTest {
 
 	@Before
 	public void setup() throws The86Exception {
-		the86 = new The86Impl("localhost:3000", "a@a.com", "foobarbar");
+		the86 = new The86Impl("http://localhost:3000", "a@a.com", "foobarbar");
 	}
 
 	@Test
 	public void testPostingUnauthorized() throws The86Exception {
-		the86 = new The86Impl("localhost:3000", "b@b.com", "asdasdasd");
+		the86 = new The86Impl("http://localhost:3000", "b@b.com", "asdasdasd");
 		try {
 			the86.createPost("2-a-user-s-pod", "1", "imma post!");
 			fail("Expected The86Exception");

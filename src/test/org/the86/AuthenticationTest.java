@@ -15,7 +15,7 @@ public class AuthenticationTest {
 	@Test
 	public void testInvalidCredentials() {
 		try {
-			new The86Impl("localhost:3000", "faux@no.com", "foobar");
+			new The86Impl("http://localhost:3000", "faux@no.com", "foobar");
 			fail("Expected The86Exception");
 		} catch (The86Exception e) {
 			assertEquals("Unauthorized.", e.getThe86Error().getMessage());
@@ -24,7 +24,7 @@ public class AuthenticationTest {
 
 	@Test
 	public void testValidCredentials() throws The86Exception {
-		The86 the86 = new The86Impl("localhost:3000", "a@a.com", "foobarbar");
+		The86 the86 = new The86Impl("http://localhost:3000", "a@a.com", "foobarbar");
 		Authorization auth = the86.getAuthorization();
 		assertNotNull("User access token", auth.getUserAccessToken());
 		assertEquals("a@a.com", auth.getUser().getEmail());

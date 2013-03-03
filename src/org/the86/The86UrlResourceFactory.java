@@ -4,16 +4,15 @@ import org.the86.model.Authorization;
 
 public class The86UrlResourceFactory {
 	private static final String API_VERSION = "v1";
-	private static final String PROTOCOL = "http://";
-	private String domain = null;
+	private String host = null;
 	private Authorization authorization;
 
-	public The86UrlResourceFactory(String domain) {
-		this.domain = domain;
+	public The86UrlResourceFactory(String host) {
+		this.host = host;
 	}
 
 	public The86UrlResource buildUrl(String resource) {
-		String url = String.format("%s%s/api/%s%s", PROTOCOL, domain,
+		String url = String.format("%s/api/%s%s", host,
 				API_VERSION, resource);
 		return new The86UrlResource(url, authorization);
 	}
