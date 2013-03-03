@@ -8,7 +8,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
-import org.the86.exception.NotFoundException;
 import org.the86.exception.The86Exception;
 import org.the86.model.Authorization;
 
@@ -70,7 +69,8 @@ public class The86UrlResource {
 			}
 
 			if (conn.getResponseCode() > 399) {
-				throw new NotFoundException(resource, new BufferedInputStream(
+				// TODO subclass exception based on HTTP status
+				throw new The86Exception(resource, new BufferedInputStream(
 						conn.getErrorStream()));
 			} else {
 				return new BufferedInputStream(conn.getInputStream());
