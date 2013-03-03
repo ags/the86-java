@@ -10,6 +10,9 @@ public interface PostService {
 	public List<Post> getConversationPosts(String groupSlug,
 			String conversationId) throws The86Exception;
 
+	public Post getConversationPost(String groupSlug, String conversationId,
+			String postId) throws The86Exception;
+
 	public Post createPost(String groupSlug, String conversationId,
 			String content) throws The86Exception;
 

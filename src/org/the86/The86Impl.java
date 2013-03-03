@@ -90,6 +90,14 @@ public class The86Impl implements The86 {
 		}, url);
 	}
 
+	public Post getConversationPost(String groupSlug, String conversationId,
+			String postId) throws The86Exception {
+		String url = String.format("/groups/%s/conversations/%s/posts/%s",
+				groupSlug, conversationId, postId);
+		return getResource(new TypeToken<Post>() {
+		}, url);
+	}
+
 	public Post createPost(String groupSlug, String conversationId,
 			String content) throws The86Exception {
 		return createPost(groupSlug, conversationId, content, null);
