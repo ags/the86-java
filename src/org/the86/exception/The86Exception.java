@@ -3,6 +3,7 @@ package org.the86.exception;
 import java.io.InputStream;
 
 import org.the86.The86ObjectFactory;
+import org.the86.model.The86Error;
 
 import com.google.gson.reflect.TypeToken;
 

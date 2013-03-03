@@ -18,7 +18,7 @@ public class AuthenticationTest {
 			new The86Impl("localhost:3000", "faux@no.com", "foobar");
 			fail("Expected The86Exception");
 		} catch (The86Exception e) {
-			assertEquals("Unauthorized.", e.getThe86Error().toString());
+			assertEquals("Unauthorized.", e.getThe86Error().getMessage());
 		}
 	}
 

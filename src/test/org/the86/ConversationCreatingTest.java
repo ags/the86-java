@@ -17,7 +17,7 @@ public class ConversationCreatingTest {
 			the86.createConversation("2-a-user-s-pod", "Hello World");
 			fail("Expected The86Exception");
 		} catch (The86Exception e) {
-			assertEquals("Unauthorized.", e.getThe86Error().toString());
+			assertEquals("Unauthorized.", e.getThe86Error().getMessage());
 		}
 	}
 

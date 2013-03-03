@@ -9,6 +9,7 @@ import org.the86.The86;
 import org.the86.The86Impl;
 import org.the86.exception.The86Exception;
 import org.the86.model.Post;
+import org.the86.model.The86Error;
 
 public class PostCreatingTest {
 	private The86 the86;
@@ -25,7 +26,7 @@ public class PostCreatingTest {
 			the86.createPost("2-a-user-s-pod", "1", "imma post!");
 			fail("Expected The86Exception");
 		} catch (The86Exception e) {
-			assertEquals("Unauthorized.", e.getThe86Error().toString());
+			assertEquals("Unauthorized.", e.getThe86Error().getMessage());
 		}
 	}
 
@@ -35,7 +36,7 @@ public class PostCreatingTest {
 			the86.createPost("2-a-user-s-pod", "0", "imma post!");
 			fail("Expected The86Exception");
 		} catch (The86Exception e) {
-			assertEquals("Resource not found.", e.getThe86Error().toString());
+			assertEquals("Resource not found.", e.getThe86Error().getMessage());
 		}
 	}
 
