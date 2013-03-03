@@ -41,6 +41,18 @@ public class PostCreatingTest {
 	}
 
 	@Test
+	public void testPostCreatingEmptyContent() throws The86Exception {
+		try {
+			the86.createPost("2-a-user-s-pod", "3", "");
+		} catch (The86Exception e) {
+			The86Error error = e.getThe86Error();
+			assertEquals("Validation failed.", error.getMessage());
+			assertEquals("Post content can't be blank", error.getErrors()
+					.get(0).toString());
+		}
+	}
+
+	@Test
 	public void testPostCreating() throws The86Exception {
 		Post post = the86.createPost("2-a-user-s-pod", "3", "imma post!");
 
