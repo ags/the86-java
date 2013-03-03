@@ -21,7 +21,9 @@ public class The86ObjectFactory {
 
 	@SuppressWarnings("unchecked")
 	public <T> T createObject(TypeToken<T> typeToken, InputStream jsonContent) {
-		if (jsonContent == null) {
+		if (typeToken == null) {
+			return null;
+		} else if (jsonContent == null) {
 			return isList(typeToken) ? (T) Collections.emptyList() : null;
 		}
 		return unmarshallToObj(typeToken, unmarshallToJson(jsonContent));

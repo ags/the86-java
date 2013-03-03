@@ -72,6 +72,8 @@ public class The86UrlResource {
 				// TODO subclass exception based on HTTP status
 				throw new The86Exception(resource, new BufferedInputStream(
 						conn.getErrorStream()));
+			} else if (conn.getResponseCode() == 204) {
+				return null;
 			} else {
 				return new BufferedInputStream(conn.getInputStream());
 			}
