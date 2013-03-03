@@ -3,7 +3,6 @@ package org.the86.model;
 import java.util.Date;
 import java.util.List;
 
-import org.the86.Metadatum;
 
 public class Conversation extends The86Object {
 

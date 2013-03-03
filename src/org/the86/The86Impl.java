@@ -11,6 +11,7 @@ import org.the86.model.Conversation;
 import org.the86.model.Group;
 import org.the86.model.GroupMembership;
 import org.the86.model.Like;
+import org.the86.model.Metadatum;
 import org.the86.model.Post;
 
 import com.google.gson.reflect.TypeToken;

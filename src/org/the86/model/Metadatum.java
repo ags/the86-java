@@ -1,8 +1,7 @@
-package org.the86;
+package org.the86.model;
 
 import java.util.Date;
 
-import org.the86.model.The86Object;
 
 public class Metadatum extends The86Object {
 
