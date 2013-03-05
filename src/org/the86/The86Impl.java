@@ -76,9 +76,10 @@ public class The86Impl implements The86 {
 		}, url);
 	}
 
-	public List<GroupMembership> getUserGroupMemberships(String userId)
+	public List<GroupMembership> getUserGroupMemberships()
 			throws The86Exception {
-		String url = String.format("/users/%s/memberships", userId);
+		String url = String.format("/users/%s/memberships", authorization
+				.getUser().getId());
 		return getResource(new TypeToken<List<GroupMembership>>() {
 		}, url);
 	}
