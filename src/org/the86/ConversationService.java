@@ -10,7 +10,7 @@ public interface ConversationService {
 	public List<Conversation> getGroupConversations(String groupSlug)
 			throws The86Exception;
 
-	public List<Conversation> getUserConversations(String userId)
+	public List<Conversation> getUserConversations()
 			throws The86Exception;
 
 	public Conversation createConversation(String groupSlug, String content)

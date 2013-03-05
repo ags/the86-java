@@ -13,6 +13,7 @@ import org.the86.model.GroupMembership;
 import org.the86.model.Like;
 import org.the86.model.Metadatum;
 import org.the86.model.Post;
+import org.the86.model.User;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -60,9 +61,9 @@ public class The86Impl implements The86 {
 		}, url);
 	}
 
-	public List<Conversation> getUserConversations(String userId)
-			throws The86Exception {
-		String url = String.format("/users/%s/conversations", userId);
+	public List<Conversation> getUserConversations() throws The86Exception {
+		String url = String.format("/users/%s/conversations", authorization
+				.getUser().getId());
 		return getResource(new TypeToken<List<Conversation>>() {
 		}, url);
 	}
