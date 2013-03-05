@@ -11,4 +11,6 @@ public interface GroupMembershipsService {
 	public List<GroupMembership> getUserGroupMemberships()
 			throws The86Exception;
 
+	public List<User> getGroupMemberships(String groupSlug)
+			throws The86Exception;
 }

@@ -84,6 +84,13 @@ public class The86Impl implements The86 {
 		}, url);
 	}
 
+	public List<User> getGroupMemberships(String groupSlug)
+			throws The86Exception {
+		String url = String.format("/groups/%s/members", groupSlug);
+		return getResource(new TypeToken<List<User>>() {
+		}, url);
+	}
+
 	public List<Post> getConversationPosts(String groupSlug,
 			String conversationId) throws The86Exception {
 		String url = String.format("/groups/%s/conversations/%s/posts",
