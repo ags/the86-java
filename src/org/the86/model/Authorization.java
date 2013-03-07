@@ -14,8 +14,4 @@ public class Authorization {
 		return user;
 	}
 
-	public String header() {
-		return  "Bearer " + user_access_token;
-	}
-
 }

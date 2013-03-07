@@ -14,7 +14,8 @@ public class UnlikingTest {
 
 	@Before
 	public void setup() throws The86Exception {
-		the86 = new The86Impl("http://localhost:3000", "a@a.com", "foobarbar");
+		the86 = new The86Impl("http://localhost:3000");
+		the86.setAuthorization(The86Test.VALID_USER_ID, The86Test.VALID_USER_AUTH_TOKEN);
 	}
 
 	@Test
@@ -24,7 +25,7 @@ public class UnlikingTest {
 		the86.unlikePost("2-a-user-s-pod", "3", post.getId(), like.getId());
 		post = the86.getConversationPost("2-a-user-s-pod", "3", post.getId());
 		for (Like l : post.getLikes()) {
-			the86.getAuthorization().getUser().equals(l.getUser());
+			The86Test.VALID_USER_ID.equals(l.getUser().getId());
 		}
 	}
 }

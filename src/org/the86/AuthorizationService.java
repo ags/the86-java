@@ -8,5 +8,6 @@ public interface AuthorizationService {
 	public Authorization authorize(String email, String password)
 			throws The86Exception;
 
-	public Authorization getAuthorization();
+	public void setAuthorization(String userId, String userAcessToken);
+
 }

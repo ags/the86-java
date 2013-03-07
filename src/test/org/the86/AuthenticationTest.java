@@ -11,11 +11,12 @@ import org.the86.exception.The86Exception;
 import org.the86.model.Authorization;
 
 public class AuthenticationTest {
-
+	
 	@Test
 	public void testInvalidCredentials() {
 		try {
-			new The86Impl("http://localhost:3000", "faux@no.com", "foobar");
+			The86 the86 = new The86Impl("http://localhost:3000");
+			the86.authorize("faux@no.com", "foobar");
 			fail("Expected The86Exception");
 		} catch (The86Exception e) {
 			assertEquals("Unauthorized.", e.getThe86Error().getMessage());
@@ -24,8 +25,8 @@ public class AuthenticationTest {
 
 	@Test
 	public void testValidCredentials() throws The86Exception {
-		The86 the86 = new The86Impl("http://localhost:3000", "a@a.com", "foobarbar");
-		Authorization auth = the86.getAuthorization();
+		The86 the86 = new The86Impl("http://localhost:3000");
+		Authorization auth = the86.authorize("a@a.com", "foobarbar");
 		assertNotNull("User access token", auth.getUserAccessToken());
 		assertEquals("a@a.com", auth.getUser().getEmail());
 	}

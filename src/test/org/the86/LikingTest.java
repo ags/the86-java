@@ -19,14 +19,15 @@ public class LikingTest {
 
 	@Before
 	public void setup() throws The86Exception {
-		the86 = new The86Impl("http://localhost:3000", "a@a.com", "foobarbar");
+		the86 = new The86Impl("http://localhost:3000");
+		the86.setAuthorization(The86Test.VALID_USER_ID, The86Test.VALID_USER_AUTH_TOKEN);
 	}
 
 	@Test
 	public void testLikingPost() throws The86Exception {
 		Post post = the86.createPost("2-a-user-s-pod", "3", "LIKE MEEEE");
 		Like like = the86.likePost("2-a-user-s-pod", "3", post.getId());
-		assertTrue(the86.getAuthorization().getUser().equals(like.getUser()));
+		assertTrue(The86Test.VALID_USER_ID.equals(like.getUser().getId()));
 	}
 
 	@Test
@@ -39,8 +40,8 @@ public class LikingTest {
 		} catch (The86Exception e) {
 			The86Error error = e.getThe86Error();
 			assertEquals("Validation failed.", error.getMessage());
-			assertEquals("Like post_id already liked", error.getErrors()
-					.get(0).toString());
+			assertEquals("Like post_id already liked", error.getErrors().get(0)
+					.toString());
 		}
 	}
 }

@@ -18,20 +18,18 @@ import org.the86.model.User;
 import com.google.gson.reflect.TypeToken;
 
 public class The86Impl implements The86 {
-	private Authorization authorization = null;
+	private String userId;
 
 	private The86ObjectFactory the86ObjFactory = new The86ObjectFactory();
-	private The86UrlResourceFactory the86UrlFactory = null;
+	private The86UrlResourceFactory the86UrlFactory;
 
-	public The86Impl(String domain, String email, String password)
-			throws The86Exception {
+	public The86Impl(String domain) throws The86Exception {
 		this.the86UrlFactory = new The86UrlResourceFactory(domain);
-		this.authorization = authorize(email, password);
-		this.the86UrlFactory.setAuthorization(authorization);
 	}
 
-	public Authorization getAuthorization() {
-		return authorization;
+	public void setAuthorization(String userId, String userAcessToken) {
+		this.userId = userId;
+		this.the86UrlFactory.setUserAuthToken(userAcessToken);
 	}
 
 	public Authorization authorize(String email, String password)
@@ -39,8 +37,12 @@ public class The86Impl implements The86 {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("email", email);
 		params.put("password", password);
-		return postResource(new TypeToken<Authorization>() {
+
+		Authorization auth = postResource(new TypeToken<Authorization>() {
 		}, "/users/authenticate", params);
+		
+		setAuthorization(auth.getUser().getId(), auth.getUserAccessToken());
+		return auth;
 	}
 
 	public List<Group> getGroups() throws The86Exception {
@@ -62,8 +64,7 @@ public class The86Impl implements The86 {
 	}
 
 	public List<Conversation> getUserConversations() throws The86Exception {
-		String url = String.format("/users/%s/conversations", authorization
-				.getUser().getId());
+		String url = String.format("/users/%s/conversations", userId);
 		return getResource(new TypeToken<List<Conversation>>() {
 		}, url);
 	}
@@ -78,8 +79,7 @@ public class The86Impl implements The86 {
 
 	public List<GroupMembership> getUserGroupMemberships()
 			throws The86Exception {
-		String url = String.format("/users/%s/memberships", authorization
-				.getUser().getId());
+		String url = String.format("/users/%s/memberships", userId);
 		return getResource(new TypeToken<List<GroupMembership>>() {
 		}, url);
 	}

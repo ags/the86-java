@@ -9,7 +9,6 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import org.the86.exception.The86Exception;
-import org.the86.model.Authorization;
 
 public class The86UrlResource {
 	private static final String METHOD_DELETE = "DELETE";
@@ -18,11 +17,11 @@ public class The86UrlResource {
 	private static final String METHOD_PUT = "PUT";
 
 	private String resource;
-	private Authorization authorization;
+	private String userAuthToken;
 
-	public The86UrlResource(String resource, Authorization authorization) {
+	public The86UrlResource(String resource, String userAuthToken) {
 		this.resource = resource;
-		this.authorization = authorization;
+		this.userAuthToken = userAuthToken;
 	}
 
 	public InputStream get() throws The86Exception {
@@ -50,8 +49,8 @@ public class The86UrlResource {
 		try {
 			HttpURLConnection conn = (HttpURLConnection) new URL(resource)
 					.openConnection();
-			if (authorization != null) {
-				conn.setRequestProperty("Authorization", authorization.header());
+			if (userAuthToken != null) {
+				conn.setRequestProperty("Authorization", authorizationHeader());
 			}
 			conn.setDoOutput(requestMethod.equals(METHOD_POST)
 					|| requestMethod.equals(METHOD_PUT));
@@ -80,5 +79,9 @@ public class The86UrlResource {
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}
+	}
+	
+	public String authorizationHeader() {
+		 return "Bearer " + userAuthToken;
 	}
 }
