@@ -23,7 +23,7 @@ public class The86Impl implements The86 {
 	private The86ObjectFactory the86ObjFactory = new The86ObjectFactory();
 	private The86UrlResourceFactory the86UrlFactory;
 
-	public The86Impl(String domain) throws The86Exception {
+	public The86Impl(String domain) {
 		this.the86UrlFactory = new The86UrlResourceFactory(domain);
 	}
 
