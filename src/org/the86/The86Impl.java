@@ -31,6 +31,10 @@ public class The86Impl implements The86 {
 		this.userId = userId;
 		this.the86UrlFactory.setUserAuthToken(userAcessToken);
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
 
 	public Authorization authorize(String email, String password)
 			throws The86Exception {
