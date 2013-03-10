@@ -65,6 +65,17 @@ public class Post extends The86Object {
 		return attachments;
 	}
 
+	public Like likeForUser(String userId) {
+		for (Like like : likes) {
+			System.out.println(String.format("%s %s", like.getUser().getId(),
+					userId));
+			if (like.getUser().getId().equals(userId)) {
+				return like;
+			}
+		}
+		return null;
+	}
+
 	public String toString() {
 		return String.format("%s - %s", content, user);
 	}

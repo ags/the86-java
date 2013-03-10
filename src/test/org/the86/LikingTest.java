@@ -20,22 +20,26 @@ public class LikingTest {
 	@Before
 	public void setup() throws The86Exception {
 		the86 = new The86Impl("http://localhost:3000");
-		the86.setAuthorization(The86Test.VALID_USER_ID, The86Test.VALID_USER_AUTH_TOKEN);
+		the86.setAuthorization(The86Test.VALID_USER_ID,
+				The86Test.VALID_USER_AUTH_TOKEN);
 	}
 
 	@Test
 	public void testLikingPost() throws The86Exception {
-		Post post = the86.createPost("2-a-user-s-pod", "3", "LIKE MEEEE");
-		Like like = the86.likePost("2-a-user-s-pod", "3", post.getId());
+		Post post = the86.createPost(The86Test.VALID_USER_GROUP_SLUG, "3",
+				"LIKE MEEEE");
+		Like like = the86.likePost(The86Test.VALID_USER_GROUP_SLUG, "3",
+				post.getId());
 		assertTrue(The86Test.VALID_USER_ID.equals(like.getUser().getId()));
 	}
 
 	@Test
 	public void testPostCreatingEmptyContent() throws The86Exception {
 		try {
-			Post post = the86.createPost("2-a-user-s-pod", "3", "LIKE MEEEE");
-			the86.likePost("2-a-user-s-pod", "3", post.getId());
-			the86.likePost("2-a-user-s-pod", "3", post.getId());
+			Post post = the86.createPost(The86Test.VALID_USER_GROUP_SLUG, "3",
+					"LIKE MEEEE");
+			the86.likePost(The86Test.VALID_USER_GROUP_SLUG, "3", post.getId());
+			the86.likePost(The86Test.VALID_USER_GROUP_SLUG, "3", post.getId());
 			fail("expected The86Exception");
 		} catch (The86Exception e) {
 			The86Error error = e.getThe86Error();
@@ -43,5 +47,13 @@ public class LikingTest {
 			assertEquals("Like post_id already liked", error.getErrors().get(0)
 					.toString());
 		}
+	}
+
+	@Test
+	public void testLikeForUser() throws The86Exception {
+		Post post = the86.createPost(The86Test.VALID_USER_GROUP_SLUG, "3", "LIKE MEEEE");
+		Like like = the86.likePost(The86Test.VALID_USER_GROUP_SLUG, "3", post.getId());
+		post = the86.getConversationPost(The86Test.VALID_USER_GROUP_SLUG, "3", post.getId());
+		assertEquals(post.likeForUser(The86Test.VALID_USER_ID).getId(), like.getId());
 	}
 }
