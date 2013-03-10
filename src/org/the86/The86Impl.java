@@ -31,7 +31,7 @@ public class The86Impl implements The86 {
 		this.userId = userId;
 		this.the86UrlFactory.setUserAuthToken(userAcessToken);
 	}
-	
+
 	public String getUserId() {
 		return userId;
 	}
@@ -47,6 +47,11 @@ public class The86Impl implements The86 {
 
 		setAuthorization(auth.getUser().getId(), auth.getUserAccessToken());
 		return auth;
+	}
+
+	public User getUser(String userId) throws The86Exception {
+		return getResource(new TypeToken<User>() {
+		}, String.format("/users/%s", userId));
 	}
 
 	public List<Group> getGroups() throws The86Exception {
