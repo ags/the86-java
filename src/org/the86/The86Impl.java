@@ -40,7 +40,7 @@ public class The86Impl implements The86 {
 
 		Authorization auth = postResource(new TypeToken<Authorization>() {
 		}, "/users/authenticate", params);
-		
+
 		setAuthorization(auth.getUser().getId(), auth.getUserAccessToken());
 		return auth;
 	}
@@ -54,6 +54,13 @@ public class The86Impl implements The86 {
 		String url = String.format("/groups/%s", groupSlug);
 		return getResource(new TypeToken<Group>() {
 		}, url);
+	}
+
+	public Group createGroup(String name) throws The86Exception {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("name", name);
+		return postResource(new TypeToken<Group>() {
+		}, "/groups", params);
 	}
 
 	public List<Conversation> getGroupConversations(String groupSlug)

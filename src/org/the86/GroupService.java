@@ -11,4 +11,6 @@ public interface GroupService {
 
 	public Group getGroup(String slug) throws The86Exception;
 
+	public Group createGroup(String name) throws The86Exception;
+
 }
