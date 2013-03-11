@@ -46,16 +46,16 @@ public class The86UrlResource {
 
 	private InputStream doRequest(String requestMethod, Map<String, String> map)
 			throws The86Exception {
+		HttpURLConnection conn = null;
 		try {
-			HttpURLConnection conn = (HttpURLConnection) new URL(resource)
-					.openConnection();
+			conn = (HttpURLConnection) new URL(resource).openConnection();
 			if (userAuthToken != null) {
 				conn.setRequestProperty("Authorization", authorizationHeader());
 			}
 			conn.setDoOutput(requestMethod.equals(METHOD_POST)
 					|| requestMethod.equals(METHOD_PUT));
 			conn.setRequestMethod(requestMethod);
-			
+
 			if (map != null && !map.isEmpty()) {
 				StringBuilder sb = new StringBuilder();
 				for (String key : map.keySet()) {
@@ -66,6 +66,7 @@ public class The86UrlResource {
 				conn.getOutputStream().write(sb.toString().getBytes());
 				conn.getOutputStream().close();
 			}
+			conn.getResponseMessage();
 
 			if (conn.getResponseCode() > 399) {
 				// TODO subclass exception based on HTTP status
@@ -77,11 +78,19 @@ public class The86UrlResource {
 				return new BufferedInputStream(conn.getInputStream());
 			}
 		} catch (IOException e) {
-			throw new RuntimeException(e.getMessage());
+			// TODO temp hack till the86 responds with the correct header
+			if (conn != null
+					&& e.getMessage().equals(
+							"No authentication challenges found")) {
+				throw new The86Exception(resource, new BufferedInputStream(
+						conn.getErrorStream()));
+			} else {
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
-	
+
 	public String authorizationHeader() {
-		 return "Bearer " + userAuthToken;
+		return "Bearer " + userAuthToken;
 	}
 }
