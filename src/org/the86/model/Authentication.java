@@ -1,6 +1,6 @@
 package org.the86.model;
 
-public class Authorization {
+public class Authentication {
 
 	private User user;
 

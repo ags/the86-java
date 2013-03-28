@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.the86.exception.The86Exception;
-import org.the86.model.Authorization;
+import org.the86.model.Authentication;
 import org.the86.model.Conversation;
 import org.the86.model.Group;
 import org.the86.model.GroupMembership;
@@ -27,7 +27,7 @@ public class The86Impl implements The86 {
 		this.the86UrlFactory = new The86UrlResourceFactory(domain);
 	}
 
-	public void setAuthorization(String userId, String userAcessToken) {
+	public void setAuthentication(String userId, String userAcessToken) {
 		this.userId = userId;
 		this.the86UrlFactory.setUserAuthToken(userAcessToken);
 	}
@@ -36,16 +36,16 @@ public class The86Impl implements The86 {
 		return userId;
 	}
 
-	public Authorization authorize(String email, String password)
+	public Authentication authenticate(String email, String password)
 			throws The86Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("email", email);
 		params.put("password", password);
 
-		Authorization auth = postResource(new TypeToken<Authorization>() {
+		Authentication auth = postResource(new TypeToken<Authentication>() {
 		}, "/users/authenticate", params);
 
-		setAuthorization(auth.getUser().getId(), auth.getUserAccessToken());
+		setAuthentication(auth.getUser().getId(), auth.getUserAccessToken());
 		return auth;
 	}
 

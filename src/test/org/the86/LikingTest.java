@@ -20,7 +20,7 @@ public class LikingTest {
 	@Before
 	public void setup() throws The86Exception {
 		the86 = new The86Impl("http://localhost:3000");
-		the86.setAuthorization(The86Test.VALID_USER_ID,
+		the86.setAuthentication(The86Test.VALID_USER_ID,
 				The86Test.VALID_USER_AUTH_TOKEN);
 	}
 

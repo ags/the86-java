@@ -17,13 +17,13 @@ public class PostCreatingTest {
 	@Before
 	public void setup() throws The86Exception {
 		the86 = new The86Impl("http://localhost:3000");
-		the86.setAuthorization(The86Test.VALID_USER_ID, The86Test.VALID_USER_AUTH_TOKEN);
+		the86.setAuthentication(The86Test.VALID_USER_ID, The86Test.VALID_USER_AUTH_TOKEN);
 	}
 
 	@Test
 	public void testPostingUnauthorized() throws The86Exception {
 		the86 = new The86Impl("http://localhost:3000");
-		the86.authorize("b@b.com", "asdasdasd");
+		the86.authenticate("b@b.com", "asdasdasd");
 		try {
 			the86.createPost("2-a-user-s-pod", "1", "imma post!");
 			fail("Expected The86Exception");

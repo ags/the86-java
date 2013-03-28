@@ -13,7 +13,7 @@ public class ConversationCreatingTest {
 	@Test
 	public void testNotAGroupMember() throws The86Exception {
 		The86 the86 = new The86Impl("http://localhost:3000");
-		the86.authorize("b@b.com", "asdasdasd");
+		the86.authenticate("b@b.com", "asdasdasd");
 		try {
 			the86.createConversation("2-a-user-s-pod", "Hello World");
 			fail("Expected The86Exception");
@@ -25,7 +25,7 @@ public class ConversationCreatingTest {
 	@Test
 	public void testCreating() throws The86Exception {
 		The86 the86 = new The86Impl("http://localhost:3000");
-		the86.authorize("a@a.com", "foobarbar");
+		the86.authenticate("a@a.com", "foobarbar");
 		Conversation c = the86.createConversation("2-a-user-s-pod",
 				"Hello World");
 		assertEquals("Hello World", c.getPosts().get(0).getContent());
